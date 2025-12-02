@@ -11,7 +11,7 @@
   "tasks": {
     "dev": {
       "name": "dev",
-      "command": "pnpm dev",
+      "command": "rm pnpm-lock.yaml && pnpm dev",
       "runAtStart": true,
       "preview": {
         "port": 3000
