@@ -8,8 +8,8 @@ import subtitles from "./subtitles.txt";
 
 import type { KaraokeLine } from "./types";
 
-// SPT (seconds per tick): 143 is the BPM
-const SPT = 1 / 8 / 143;
+// SPT (seconds per tick): 136.62 is the BPM
+const SPT = 5 / 8 / 136.62;
 
 const parsedData = parseKaraoke(subtitles);
 const precomputedLines = precomputeDisplayTime(parsedData);
@@ -27,9 +27,9 @@ export default function TiuMouGaai() {
 		return <div key={index} className="text-left even:text-right">
 			{line.segments.map((segment, segmentIndex) =>
 				"rubyBase" in segment
-					? <ruby key={segmentIndex}>
+					? <ruby className="text-[0.8em]" key={segmentIndex}>
 						<KaraokeAnimatedSegment segment={segment.rubyBase} currTicks={currTicks} />
-						<rt className="relative top-20">
+						<rt className="relative top-32">
 							{segment.rubyText.map((rubySegment, rubySegmentIndex) => (
 								<KaraokeAnimatedSegment key={rubySegmentIndex} segment={rubySegment} currTicks={currTicks} />
 							))}
@@ -43,8 +43,8 @@ export default function TiuMouGaai() {
 	}
 
 	return (
-		<AbsoluteFill lang="ja" className="bg-black text-white select-none">
-			<div className="absolute bottom-20 inset-x-20 text-[100px] font-serif leading-none whitespace-nowrap">
+		<AbsoluteFill lang="zh-HK" className="bg-black text-white select-none">
+			<div className="absolute bottom-20 inset-x-20 text-[160px] font-vf-sung leading-[1.1] whitespace-nowrap">
 				{displayLines.map(renderLine)}
 			</div>
 		</AbsoluteFill>

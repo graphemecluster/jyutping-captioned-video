@@ -19,7 +19,7 @@ export default function RemotionRoot() {
 			<Composition
 				id="TiuMouGaai"
 				component={TiuMouGaai}
-				durationInFrames={250 * 30}
+				durationInFrames={224 * 30}
 				fps={30}
 				width={1920}
 				height={1080} />
