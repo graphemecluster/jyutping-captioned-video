@@ -11,7 +11,7 @@ Config.setOverwriteOutput(true);
 Config.overrideWebpackConfig(enableTailwind);
 Config.overrideWebpackConfig(config => {
 	config.module?.rules?.push({
-		test: /\.lrc$/i,
+		test: /\.(lrc|txt)$/i,
 		use: "raw-loader",
 	});
 	return config;
