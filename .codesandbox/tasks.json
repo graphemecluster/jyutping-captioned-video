@@ -17,9 +17,9 @@
         "port": 3000
       }
     },
-    "build": {
-      "name": "build",
-      "command": "pnpm build"
+    "rm": {
+      "name": "rm",
+      "command": "rm pnpm-lock.yaml"
     },
     "upgrade": {
       "name": "upgrade",
