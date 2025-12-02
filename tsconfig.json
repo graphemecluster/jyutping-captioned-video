@@ -1,0 +1,41 @@
+{
+	// Visit https://aka.ms/tsconfig to read more about this file
+	"compilerOptions": {
+		// Environment Settings
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"moduleDetection": "force",
+		"target": "ESNext",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"types": [],
+		"jsx": "react-jsx",
+
+		// Output Options
+		"noEmit": true,
+
+		// Stricter Typechecking Options
+		// "noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
+
+		// Style Options
+		"strict": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"forceConsistentCasingInFileNames": true,
+
+		// Recommended Options
+		"verbatimModuleSyntax": true,
+		"isolatedModules": true,
+		// "isolatedDeclarations": true,
+		"noUncheckedSideEffectImports": true,
+		"skipLibCheck": true,
+		"composite": true
+	},
+	"exclude": ["remotion.config.ts"]
+}

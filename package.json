@@ -1,0 +1,32 @@
+{
+	"name": "jyutping-captioned-video",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "remotion studio",
+		"build": "remotion bundle",
+		"upgrade": "remotion upgrade",
+		"lint": "eslint src && tsc"
+	},
+	"dependencies": {
+		"@remotion/cli": "^4.0.379",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"remotion": "^4.0.379",
+		"@remotion/tailwind-v4": "^4.0.379",
+		"tailwindcss": "^4.1.17"
+	},
+	"devDependencies": {
+		"@remotion/eslint-config-flat": "^4.0.379",
+		"@types/react": "^19.2.7",
+		"@types/web": "~0.0.294",
+		"eslint": "^9.39.1",
+		"prettier": "^3.7.3",
+		"raw-loader": "^4.0.2",
+		"typescript": "~5.9.3"
+	},
+	"sideEffects": [
+		"*.css"
+	]
+}
