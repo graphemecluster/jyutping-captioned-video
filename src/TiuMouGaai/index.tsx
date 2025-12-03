@@ -28,14 +28,12 @@ export default function TiuMouGaai() {
 			{line.segments.map((segment, segmentIndex) =>
 				"rubyBase" in segment
 					? <ruby className="text-[0.8em]" key={segmentIndex}>
-						<KaraokeAnimatedSegment segment={segment.rubyBase} currTicks={currTicks} />
+						<KaraokeAnimatedSegment segment={{ tokens: [segment.rubyBase] }} currTicks={currTicks} />
 						<rt className="relative top-32">
-							{segment.rubyText.map((rubySegment, rubySegmentIndex) => (
-								<KaraokeAnimatedSegment key={rubySegmentIndex} segment={rubySegment} currTicks={currTicks} />
-							))}
+							<KaraokeAnimatedSegment segment={segment.rubyText} currTicks={currTicks} />
 						</rt>
 					</ruby>
-					: "start" in segment
+					: "tokens" in segment
 					? <KaraokeAnimatedSegment key={segmentIndex} segment={segment} currTicks={currTicks} />
 					: <Fragment key={segmentIndex}>{segment.text}</Fragment>
 			)}

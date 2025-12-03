@@ -1,19 +1,24 @@
-export interface KaraokeTextSegment {
+export interface KaraokePlainTextToken {
+	note?: number; // MIDI note number
 	text: string;
 }
 
-export interface KaraokeAnimatedTextSegment extends KaraokeTextSegment {
+export interface KaraokeAnimatedTextToken extends KaraokePlainTextToken {
 	start: number; // in ticks
 	end: number; // in ticks
 }
 
-export interface KaraokeRuby {
-	rubyBase: KaraokeAnimatedTextSegment;
-	rubyText: KaraokeAnimatedTextSegment[];
+export interface KaraokeAnimatedTextSegment {
+	tokens: KaraokeAnimatedTextToken[];
+}
+
+export interface KaraokeAnimatedRuby {
+	rubyBase: KaraokeAnimatedTextToken;
+	rubyText: KaraokeAnimatedTextSegment;
 }
 
 export interface KaraokeLine {
-	segments: (KaraokeTextSegment | KaraokeAnimatedTextSegment | KaraokeRuby)[];
+	segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[];
 	start: number; // in ticks
 	end: number; // in ticks
 }
