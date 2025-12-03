@@ -27,6 +27,6 @@ export interface KaraokeParagraph {
 	lines: KaraokeLine[];
 }
 
-export interface KaraokeLineWithIndex extends KaraokeLine {
-	index: number;
+export interface KaraokeLineWithDisplayLineIndex extends KaraokeLine {
+	displayLineIndex: number;
 }
