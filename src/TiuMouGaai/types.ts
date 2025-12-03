@@ -1,5 +1,5 @@
 export interface KaraokePlainTextToken {
-	note?: number; // MIDI note number
+	note?: number | undefined; // MIDI note number
 	text: string;
 }
 

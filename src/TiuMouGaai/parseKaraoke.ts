@@ -33,8 +33,8 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 							const parts = rubyTextMatch[1].split("|");
 							const start = Number.parseFloat(parts[0]);
 							const end = Number.parseFloat(parts[1]);
-							const note = Number.parseInt(parts[2]);
-							const text = parts[3];
+							const note = parts[3] === undefined ? undefined : Number.parseInt(parts[2]);
+							const text = parts[3] === undefined ? parts[2] : parts[3];
 							tokens.push({ note, text, start, end });
 
 							rubyBaseStart = Math.min(rubyBaseStart, start);
@@ -61,8 +61,8 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 							const parts = matches[j][2].split("|");
 							const start = Number.parseFloat(parts[0]);
 							const end = Number.parseFloat(parts[1]);
-							const note = Number.parseInt(parts[2]);
-							const text = parts[3];
+							const note = parts[3] === undefined ? undefined : Number.parseInt(parts[2]);
+							const text = parts[3] === undefined ? parts[2] : parts[3];
 							tokens.push({ note, text, start, end });
 
 							lineStart = Math.min(lineStart, start);
