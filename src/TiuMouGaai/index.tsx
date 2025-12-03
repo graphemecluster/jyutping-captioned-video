@@ -9,8 +9,8 @@ import subtitles from "./subtitles.txt";
 import type { KaraokeLine } from "./types";
 
 const config = {
-	title: "跳舞街",
-	ticksPerSecond: 136.62 * 8 / 5,
+	title: "only my railgun",
+	ticksPerSecond: 143 * 8,
 
 	maxDisplayLines: 4,
 };
@@ -41,9 +41,9 @@ export default function TiuMouGaai() {
 							}}>
 							{line.segments.map((segment, segmentIndex) =>
 								"rubyBase" in segment
-									? <ruby className="text-[0.8em]" key={segmentIndex}>
+									? <ruby key={segmentIndex}>
 										<KaraokeAnimatedSegment segment={{ tokens: [segment.rubyBase] }} currTicks={currTicks} />
-										<rt className="relative top-32">
+										<rt className="relative top-20">
 											<KaraokeAnimatedSegment segment={segment.rubyText} currTicks={currTicks} />
 										</rt>
 									</ruby>
@@ -58,7 +58,7 @@ export default function TiuMouGaai() {
 	}
 
 	return (
-		<AbsoluteFill lang="zh-HK" className="flex flex-col items-stretch justify-end pb-20 px-20 bg-black text-[160px] font-vf-sung leading-[1.1] text-white select-none">
+		<AbsoluteFill lang="ja" className="flex flex-col items-stretch justify-end pb-20 px-20 bg-black text-[100px] font-serif gap-12 text-white select-none">
 			{displayLines.map(renderLine)}
 		</AbsoluteFill>
 	);
