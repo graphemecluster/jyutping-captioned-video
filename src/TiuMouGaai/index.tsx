@@ -1,7 +1,7 @@
-import { Fragment } from "react/jsx-runtime";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
 import KaraokeAnimatedSegment from "./KaraokeAnimatedSegment";
+import KaraokeStaticSegment from "./KaraokeStaticSegment";
 import parseKaraoke from "./parseKaraoke";
 import precomputeDisplayTime from "./precomputeDisplayTime";
 import subtitles from "./subtitles.txt";
@@ -50,7 +50,7 @@ export default function TiuMouGaai() {
 			}}>
 			&nbsp;
 			<div
-				className="absolute bottom-0 whitespace-nowrap"
+				className="absolute bottom-0 whitespace-pre"
 				style={{
 					left: `${(actualDisplayLineCount > 1 ? line.displayLineIndex / (actualDisplayLineCount - 1) : 0.5) * 100}%`,
 					translate: `-${(actualDisplayLineCount > 1 ? line.displayLineIndex / (actualDisplayLineCount - 1) : 0.5) * 100}%`,
@@ -66,7 +66,7 @@ export default function TiuMouGaai() {
 						</ruby>
 						: "tokens" in segment
 						? <KaraokeAnimatedSegment key={segmentIndex} segment={segment} currTicks={currTicks} />
-						: <Fragment key={segmentIndex}>{segment.text}</Fragment>
+						: <KaraokeStaticSegment key={segmentIndex} token={segment} />
 				)}
 			</div>
 		</div>;
