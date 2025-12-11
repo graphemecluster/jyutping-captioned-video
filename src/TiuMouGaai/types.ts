@@ -25,6 +25,7 @@ export interface KaraokeLine {
 
 export interface KaraokeParagraph {
 	lines: KaraokeLine[];
+	propertyOverrides: Record<string, string>;
 }
 
 export interface EnterExitTransitionTimes {

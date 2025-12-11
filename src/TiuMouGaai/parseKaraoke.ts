@@ -8,6 +8,20 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 	return paragraphs.map(paragraph => {
 		const lines = paragraph.trim().split(/\r\n|\r(?!\n)|\n|\u2028/);
 
+		const propertyOverrides: Record<string, string> = {};
+		const overrideLineMatch = lines[0].match(/^@override\s+(.*)$/);
+		if (overrideLineMatch) {
+			lines.shift();
+			const overrides = overrideLineMatch[1].trim().split(/\s+/);
+			for (const override of overrides) {
+				const overrideMatch = override.match(/^([^=]+)=(.*)$/);
+				if (overrideMatch) {
+					const [, key, value] = overrideMatch;
+					propertyOverrides[key] = value;
+				}
+			}
+		}
+
 		return {
 			lines: lines.map(line => {
 				const segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[] = [];
@@ -86,6 +100,8 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 					end: lineEnd,
 				};
 			}),
+
+			propertyOverrides,
 		};
 	});
 }
