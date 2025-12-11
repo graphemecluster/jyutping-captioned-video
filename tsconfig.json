@@ -25,7 +25,7 @@
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true,
+		// "noFallthroughCasesInSwitch": true, // TODO: Use ESLint
 		"noPropertyAccessFromIndexSignature": true,
 		"forceConsistentCasingInFileNames": true,
 

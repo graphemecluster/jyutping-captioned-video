@@ -1,5 +1,7 @@
 // Time unit: ticks (raw values from data file)
 
+import { parseSexagesimalNumber } from "../utils";
+
 import type { KaraokeAnimatedRuby, KaraokeAnimatedTextSegment, KaraokeAnimatedTextToken, KaraokeParagraph, KaraokePlainTextToken } from "./types";
 
 export default function parseKaraoke(input: string): KaraokeParagraph[] {
@@ -26,8 +28,16 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 			lines: lines.map(line => {
 				const segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[] = [];
 				let fullText = "";
-				let lineStart = Infinity;
-				let lineEnd = 0;
+				let lineStart = Number.MAX_VALUE;
+				let lineEnd = -Number.MAX_VALUE;
+
+				const lineTimespanMatch = line.match(/^{{([^{}]+)}}\s*(?:\\(?=\s))?/);
+				if (lineTimespanMatch) {
+					line = line.slice(lineTimespanMatch[0].length);
+					const parts = lineTimespanMatch[1].split("|");
+					lineStart = parseSexagesimalNumber(parts[0]);
+					lineEnd = parseSexagesimalNumber(parts[1]);
+				}
 
 				// Parse pattern: [rubyBase{start|end|note|rubyText1}{start|end|note|rubyText2}] or {start|end|note|text} or plain text
 				const matches = Array.from(line.matchAll(/\[([^[\]{}]+)(?:\{[^{}]+\})+\]|\{([^{}]+)\}|([^[\]{}]+)/g));
@@ -41,13 +51,13 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 						const rubyTextMatches = match[0].matchAll(/\{([^{}]+)\}/g);
 						const tokens: KaraokeAnimatedTextToken[] = [];
 
-						let rubyBaseStart = Infinity;
-						let rubyBaseEnd = 0;
+						let rubyBaseStart = Number.MAX_VALUE;
+						let rubyBaseEnd = -Number.MAX_VALUE;
 
 						for (const rubyTextMatch of rubyTextMatches) {
 							const parts = rubyTextMatch[1].split("|");
-							const start = Number.parseFloat(parts[0]);
-							const end = Number.parseFloat(parts[1]);
+							const start = parseSexagesimalNumber(parts[0]);
+							const end = parseSexagesimalNumber(parts[1]);
 							const note = parts[3] === undefined ? undefined : Number.parseInt(parts[2]);
 							const text = parts[3] === undefined ? parts[2] : parts[3];
 							tokens.push({ note, text, start, end });
@@ -75,8 +85,8 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 
 						for (let j = i; j < matches.length && matches[j][2]; j++) {
 							const parts = matches[j][2].split("|");
-							const start = Number.parseFloat(parts[0]);
-							const end = Number.parseFloat(parts[1]);
+							const start = parseSexagesimalNumber(parts[0]);
+							const end = parseSexagesimalNumber(parts[1]);
 							const note = parts[3] === undefined ? undefined : Number.parseInt(parts[2]);
 							const text = parts[3] === undefined ? parts[2] : parts[3];
 							tokens.push({ note, text, start, end });
