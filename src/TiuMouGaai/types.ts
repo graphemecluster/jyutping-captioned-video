@@ -19,6 +19,7 @@ export interface KaraokeAnimatedRuby {
 
 export interface KaraokeLine {
 	segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[];
+	fullText: string; // Only for displaying on Remotion Studio's timeline interface
 	start: number; // in ticks
 	end: number; // in ticks
 }
@@ -38,5 +39,6 @@ export interface EnterExitTransitionTimes {
 
 export interface KaraokeAnimatedLine extends EnterExitTransitionTimes {
 	segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[];
+	fullText: string;
 	displayLineIndex: number;
 }

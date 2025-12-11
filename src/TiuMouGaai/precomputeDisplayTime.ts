@@ -11,8 +11,9 @@ export default function precomputeDisplayTime(paragraphs: KaraokeParagraph[], co
 	// n.b. Number.MAX_VALUE is used instead of Infinity, otherwise both Remotion's built-in `interpolate` and `interpolateUnitBidirectional` in `utils.ts` won't work correctly
 	return paragraphs.flatMap(({ lines, propertyOverrides }, i) => {
 		const nLines = Number.parseInt(propertyOverrides["maxDisplayLines"]) || maxDisplayLines;
-		return lines.map(({ segments }, j) => ({
+		return lines.map(({ segments, fullText }, j) => ({
 			segments,
+			fullText,
 			enterStart: j < nLines
 				? (lines[0].start * (1 - padDur - InstAnimDur / 2) + (paragraphs[i - 1]?.lines.at(-1)!.end ?? -Number.MAX_VALUE) * (padDur + InstAnimDur / 2))
 				: nLines > 1

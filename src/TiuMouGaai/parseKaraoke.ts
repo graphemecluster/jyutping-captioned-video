@@ -25,6 +25,7 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 		return {
 			lines: lines.map(line => {
 				const segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[] = [];
+				let fullText = "";
 				let lineStart = Infinity;
 				let lineEnd = 0;
 
@@ -65,6 +66,7 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 							},
 							rubyText: { tokens },
 						});
+						fullText += rubyBase;
 					}
 					else if (match[2]) {
 						// Animated token pattern: {start|end|note|text}
@@ -78,6 +80,7 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 							const note = parts[3] === undefined ? undefined : Number.parseInt(parts[2]);
 							const text = parts[3] === undefined ? parts[2] : parts[3];
 							tokens.push({ note, text, start, end });
+							fullText += text;
 
 							lineStart = Math.min(lineStart, start);
 							lineEnd = Math.max(lineEnd, end);
@@ -91,11 +94,13 @@ export default function parseKaraoke(input: string): KaraokeParagraph[] {
 						// Plain text
 						const text = match[3];
 						segments.push({ text });
+						fullText += text;
 					}
 				}
 
 				return {
 					segments,
+					fullText,
 					start: lineStart,
 					end: lineEnd,
 				};

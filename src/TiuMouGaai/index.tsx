@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 
 import KaraokeAnimatedSegment from "./KaraokeAnimatedSegment";
 import KaraokeStaticSegment from "./KaraokeStaticSegment";
@@ -41,13 +41,27 @@ export default function TiuMouGaai() {
 	const actualDisplayLineCount = new Set(displayLines.map(({ displayLineIndex }) => displayLineIndex)).size;
 
 	function renderLine(line: KaraokeAnimatedLine, lineIndex: number) {
-		return <div
+		// These are only calculated for displaying on Remotion Studio's timeline interface
+		// and are not used for anything affecting the visual display of the video itself
+		const startInFrames = Math.max(0, Math.floor((line.enterStart / config.ticksPerSecond) * fps));
+		const endInFrames = Math.ceil((line.exitEnd / config.ticksPerSecond) * fps);
+		return <Sequence
 			key={lineIndex}
 			className="relative w-0"
 			style={{
+				// Unset properties set internally by Remotion's `Sequence` component
+				position: undefined,
+				inset: undefined,
+				display: undefined,
+				height: undefined,
+
 				gridRowStart: line.displayLineIndex + 1,
 				gridColumnStart: line.displayLineIndex + 1,
-			}}>
+			}}
+			// Properties for Remotion Studio's timeline interface
+			name={line.fullText}
+			from={startInFrames}
+			durationInFrames={endInFrames - startInFrames}>
 			&nbsp;
 			<div
 				className="absolute bottom-0 whitespace-pre"
@@ -69,14 +83,15 @@ export default function TiuMouGaai() {
 						: <KaraokeStaticSegment key={segmentIndex} token={segment} />
 				)}
 			</div>
-		</div>;
+		</Sequence>;
 	}
 
 	return (
 		<AbsoluteFill
 			lang="zh-HK"
 			className={`grid items-baseline content-end ${actualDisplayLineCount > 1 ? "justify-between" : "justify-around"} pb-20 px-20 bg-black text-[160px] font-vf-sung leading-[1.1] text-white select-none`}>
-			{displayLines.map(renderLine)}
+			{/* Use `precomputedLines` instead of `displayLines` to always display all lines on Remotion Studio's timeline interface */}
+			{precomputedLines.map(renderLine)}
 		</AbsoluteFill>
 	);
 }
