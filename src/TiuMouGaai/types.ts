@@ -27,6 +27,15 @@ export interface KaraokeParagraph {
 	lines: KaraokeLine[];
 }
 
-export interface KaraokeLineWithDisplayLineIndex extends KaraokeLine {
+export interface EnterExitTransitionTimes {
+	// All in ticks
+	enterStart: number;
+	enterEnd: number;
+	exitStart: number;
+	exitEnd: number;
+}
+
+export interface KaraokeAnimatedLine extends EnterExitTransitionTimes {
+	segments: (KaraokePlainTextToken | KaraokeAnimatedTextSegment | KaraokeAnimatedRuby)[];
 	displayLineIndex: number;
 }
